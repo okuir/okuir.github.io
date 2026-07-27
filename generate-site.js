@@ -113,6 +113,17 @@ img { max-width: 100%; height: auto; }
 }
 .logo-area { display: flex; align-items: center; }
 .logo-area > *:first-child { margin-right: 14px; }
+.logo-wrap {
+  display: flex; align-items: center; justify-content: center;
+  padding: 6px 10px; border-radius: 10px;
+  background: rgba(0,212,255,.06);
+  border: 1px solid rgba(0,212,255,.15);
+  box-shadow: 0 0 12px rgba(0,212,255,.08);
+}
+.logo-wrap img {
+  height: 36px; max-width: 110px;
+  filter: brightness(1.3) contrast(1.1) drop-shadow(0 0 4px rgba(0,212,255,.2));
+}
 .logo-icon {
   width: 40px; height: 40px; border-radius: 10px;
   background: var(--gold-gradient);
@@ -124,6 +135,7 @@ img { max-width: 100%; height: auto; }
   font-family: 'Orbitron', sans-serif;
   font-size: 1.2rem; font-weight: 600; letter-spacing: 1px;
   color: var(--text);
+  text-shadow: 0 0 16px rgba(0,212,255,.15);
 }
 .header-badge {
   padding: 7px 18px; border-radius: 24px; font-size: .75rem; font-weight: 500;
@@ -135,6 +147,7 @@ img { max-width: 100%; height: auto; }
 /* ── Hero ── */
 .hero {
   text-align: center; padding: 80px 32px 60px; position: relative;
+  overflow: hidden;
 }
 .hero::before {
   content: ''; position: absolute; top: 0; left: 50%;
@@ -142,6 +155,22 @@ img { max-width: 100%; height: auto; }
   width: 100%; max-width: 800px; height: 100%;
   background: radial-gradient(ellipse, rgba(0,212,255,.08) 0%, transparent 70%);
   pointer-events: none;
+}
+.hero::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,212,255,.015) 2px,
+    rgba(0,212,255,.015) 4px
+  );
+  pointer-events: none; z-index: 0;
+  animation: scanline 8s linear infinite;
+}
+@keyframes scanline {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
 }
 .hero h1 {
   font-family: 'Orbitron', sans-serif;
@@ -294,6 +323,7 @@ img { max-width: 100%; height: auto; }
   background: linear-gradient(135deg, rgba(0,212,255,.08), rgba(124,58,237,.06));
   display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
   border: 1px solid rgba(0,212,255,.1);
+  animation: glow 3s ease-in-out infinite;
 }
 .feature-card h3 {
   font-family: 'Orbitron', sans-serif;
@@ -340,7 +370,8 @@ img { max-width: 100%; height: auto; }
 
 /* ── Animations ── */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes glow { 0%, 100% { box-shadow: 0 0 8px rgba(0,212,255,.1); } 50% { box-shadow: 0 0 20px rgba(0,212,255,.2); } }
+@keyframes glow { 0%, 100% { box-shadow: 0 0 8px rgba(0,212,255,.1); } 50% { box-shadow: 0 0 20px rgba(0,212,255,.25); } }
+@keyframes borderGlow { 0%, 100% { border-color: rgba(0,212,255,.06); } 50% { border-color: rgba(0,212,255,.2); } }
 .animate { animation: fadeUp .5s ease forwards; opacity: 0; }
 `;
 
@@ -511,7 +542,7 @@ function main() {
 <header class="header">
     <div class="header-inner">
         <div class="logo-area">
-            <img src="${esc(fixImg(meta.siteLogo || '', siteUrl))}" alt="${esc(siteName)}" style="height:40px;max-width:120px;">
+            <div class="logo-wrap"><img src="${esc(fixImg(meta.siteLogo || '', siteUrl))}" alt="${esc(siteName)}"></div>
             <div>
                 <div class="logo-text">${esc(siteName)}</div>
                 <div style="font-size:.78rem;color:var(--text3);margin-top:-5px;">商城原址：<a href="${siteUrl}" target="_blank" rel="noopener" style="color:var(--text3)">${esc(siteUrl)}</a></div>
