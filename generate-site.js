@@ -122,7 +122,7 @@ img { max-width: 100%; height: auto; }
 }
 .logo-wrap img {
   height: 36px; max-width: 110px;
-  filter: brightness(1.3) contrast(1.1) drop-shadow(0 0 4px rgba(0,212,255,.2));
+  filter: invert(1) brightness(1.1) drop-shadow(0 0 6px rgba(0,212,255,.35));
 }
 .logo-icon {
   width: 40px; height: 40px; border-radius: 10px;
