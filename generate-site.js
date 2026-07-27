@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * 轻奢风格静态站生成器 - SEO优化 + 商品展示 + 跳转原站
+ * 科技风格静态站生成器 - SEO优化 + 商品展示 + 跳转原站
  */
 
 const fs = require('fs');
@@ -43,35 +43,35 @@ const SEO_TWITTER = SEO.twitter || {};
 const SEO_JSON_LD = SEO.jsonLd || {};
 const SEO_FAVICON = SEO.favicon || '';
 
-// ── CSS: 轻奢风格 ──
+// ── CSS: 科技风格 ──
 const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  --bg: #faf8f5;
-  --bg2: #f5f0ea;
-  --card: #ffffff;
-  --card-hover: #fffdfb;
-  --border: #e8e0d6;
-  --border-light: #f0ebe4;
-  --primary: #b8965a;
-  --primary-light: #d4b478;
-  --primary-dark: #9a7a42;
-  --accent: #c9a96e;
-  --accent-light: #e8d5a8;
-  --text: #2c2520;
-  --text2: #6b5e52;
-  --text3: #9b8e82;
-  --text-muted: #b8ada2;
-  --gold-gradient: linear-gradient(135deg, #d4b478 0%, #b8965a 50%, #c9a96e 100%);
-  --gold-shine: linear-gradient(135deg, #e8d5a8 0%, #d4b478 30%, #b8965a 60%, #c9a96e 100%);
-  --radius: 12px;
-  --radius-lg: 20px;
+  --bg: #0a0e1a;
+  --bg2: #0f1424;
+  --card: rgba(15, 20, 40, 0.8);
+  --card-hover: rgba(20, 28, 55, 0.9);
+  --border: rgba(0, 212, 255, 0.1);
+  --border-light: rgba(0, 212, 255, 0.06);
+  --primary: #00d4ff;
+  --primary-light: #33ddff;
+  --primary-dark: #00a8cc;
+  --accent: #7c3aed;
+  --accent-light: #a78bfa;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+  --text3: #64748b;
+  --text-muted: #475569;
+  --gold-gradient: linear-gradient(135deg, #00d4ff 0%, #7c3aed 50%, #00d4ff 100%);
+  --gold-shine: linear-gradient(135deg, #33ddff 0%, #00d4ff 30%, #7c3aed 60%, #a78bfa 100%);
+  --radius: 8px;
+  --radius-lg: 12px;
   --max-w: 1200px;
-  --shadow-sm: 0 2px 8px rgba(44,37,32,.04);
-  --shadow-md: 0 4px 20px rgba(44,37,32,.06);
-  --shadow-lg: 0 8px 40px rgba(44,37,32,.08);
-  --shadow-gold: 0 4px 20px rgba(184,150,90,.12);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.3);
+  --shadow-md: 0 4px 20px rgba(0,0,0,.4);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,.5);
+  --shadow-gold: 0 4px 20px rgba(0,212,255,.15);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -83,17 +83,20 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── 背景纹理 ── */
+/* ── 背景网格 ── */
 body::before {
   content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
   background:
-    radial-gradient(ellipse at 20% 0%, rgba(184,150,90,.04) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 100%, rgba(201,169,110,.03) 0%, transparent 60%);
+    linear-gradient(rgba(0,212,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,.03) 1px, transparent 1px),
+    radial-gradient(ellipse at 20% 0%, rgba(0,212,255,.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 100%, rgba(124,58,237,.05) 0%, transparent 60%);
+  background-size: 60px 60px, 60px 60px, 100% 100%, 100% 100%;
   pointer-events: none; z-index: 0;
 }
 
 a { color: var(--primary); text-decoration: none; transition: color .3s; }
-a:hover { color: var(--primary-dark); }
+a:hover { color: var(--primary-light); }
 img { max-width: 100%; height: auto; }
 
 .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
@@ -101,8 +104,8 @@ img { max-width: 100%; height: auto; }
 /* ── Header ── */
 .header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(250,248,245,.92); backdrop-filter: blur(24px) saturate(1.2);
-  border-bottom: 1px solid var(--border-light);
+  background: rgba(10,14,26,.88); backdrop-filter: blur(24px) saturate(1.4);
+  border-bottom: 1px solid var(--border);
 }
 .header-inner {
   max-width: var(--max-w); margin: 0 auto; padding: 18px 32px;
@@ -118,14 +121,14 @@ img { max-width: 100%; height: auto; }
   box-shadow: var(--shadow-gold);
 }
 .logo-text {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.2rem; font-weight: 600; letter-spacing: .5px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem; font-weight: 600; letter-spacing: 1px;
   color: var(--text);
 }
 .header-badge {
   padding: 7px 18px; border-radius: 24px; font-size: .75rem; font-weight: 500;
-  background: rgba(184,150,90,.08); color: var(--primary);
-  border: 1px solid rgba(184,150,90,.15);
+  background: rgba(0,212,255,.08); color: var(--primary);
+  border: 1px solid rgba(0,212,255,.2);
   letter-spacing: .5px;
 }
 
@@ -137,19 +140,20 @@ img { max-width: 100%; height: auto; }
   content: ''; position: absolute; top: 0; left: 50%;
   transform: translateX(-50%);
   width: 100%; max-width: 800px; height: 100%;
-  background: radial-gradient(ellipse, rgba(184,150,90,.06) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(0,212,255,.08) 0%, transparent 70%);
   pointer-events: none;
 }
 .hero h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 600;
   color: var(--text);
-  margin-bottom: 8px; letter-spacing: 1px;
+  margin-bottom: 8px; letter-spacing: 2px;
 }
 .hero-divider {
   width: 48px; height: 2px; margin: 16px auto 20px;
   background: var(--gold-gradient);
   border-radius: 2px;
+  box-shadow: 0 0 12px rgba(0,212,255,.4);
 }
 .hero p {
   font-size: 1rem; color: var(--text2); max-width: 560px; margin: 0 auto 36px;
@@ -161,9 +165,10 @@ img { max-width: 100%; height: auto; }
 .hero-stats .stat-item { margin: 0 24px; }
 .stat-item { text-align: center; }
 .stat-num {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 2rem; font-weight: 600; color: var(--primary);
   display: block; line-height: 1.2;
+  text-shadow: 0 0 20px rgba(0,212,255,.3);
 }
 .stat-label {
   font-size: .72rem; color: var(--text3); text-transform: uppercase;
@@ -181,10 +186,11 @@ img { max-width: 100%; height: auto; }
   font-size: .85rem; font-weight: 500; transition: all .3s;
   background: var(--card); color: var(--text2); border: 1px solid var(--border);
   letter-spacing: .3px;
+  backdrop-filter: blur(10px);
 }
 .filter-btn:hover {
   background: var(--card-hover); color: var(--text);
-  border-color: var(--primary-light); box-shadow: var(--shadow-sm);
+  border-color: var(--primary); box-shadow: var(--shadow-sm), 0 0 12px rgba(0,212,255,.1);
 }
 .filter-btn.active {
   background: var(--gold-gradient);
@@ -209,10 +215,11 @@ img { max-width: 100%; height: auto; }
   border: 1px solid var(--border-light); transition: all .4s ease;
   cursor: pointer; position: relative;
   box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px);
 }
 .product-card:hover {
-  transform: translateY(-8px); border-color: var(--accent-light);
-  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(184,150,90,.08);
+  transform: translateY(-8px); border-color: var(--primary);
+  box-shadow: var(--shadow-lg), 0 0 24px rgba(0,212,255,.12);
 }
 
 .card-img-wrap {
@@ -228,10 +235,10 @@ img { max-width: 100%; height: auto; }
 .card-tag {
   position: absolute; top: 14px; left: 14px;
   padding: 5px 12px; border-radius: 6px; font-size: .68rem; font-weight: 600;
-  background: rgba(255,255,255,.92); color: var(--primary-dark);
+  background: rgba(10,14,26,.85); color: var(--primary);
   backdrop-filter: blur(8px); letter-spacing: .5px;
-  border: 1px solid rgba(184,150,90,.12);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0,212,255,.2);
+  box-shadow: 0 0 8px rgba(0,212,255,.1);
 }
 
 .card-body { padding: 20px; }
@@ -248,16 +255,16 @@ img { max-width: 100%; height: auto; }
   display: flex; align-items: center; justify-content: space-between;
 }
 .card-price {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.2rem; font-weight: 600; color: var(--primary-dark);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem; font-weight: 600; color: var(--primary);
 }
-.card-price .from { font-size: .7rem; font-weight: 400; color: var(--text3); margin-right: 2px; }
+.card-price .from { font-size: .7rem; font-weight: 400; color: var(--text3); margin-right: 2px; font-family: 'Inter', sans-serif; }
 .card-arrow {
   width: 34px; height: 34px; border-radius: 50%;
-  background: rgba(184,150,90,.06); display: flex;
+  background: rgba(0,212,255,.06); display: flex;
   align-items: center; justify-content: center;
   color: var(--primary); font-size: .85rem;
-  transition: all .3s; border: 1px solid rgba(184,150,90,.1);
+  transition: all .3s; border: 1px solid rgba(0,212,255,.15);
 }
 .product-card:hover .card-arrow {
   background: var(--gold-gradient); color: #fff;
@@ -276,19 +283,20 @@ img { max-width: 100%; height: auto; }
   background: var(--card); border-radius: var(--radius-lg); padding: 32px;
   border: 1px solid var(--border-light); text-align: center;
   transition: all .3s; box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px);
 }
 .feature-card:hover {
-  border-color: var(--accent-light); transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--primary); transform: translateY(-4px);
+  box-shadow: var(--shadow-md), 0 0 16px rgba(0,212,255,.08);
 }
 .feature-icon {
   width: 56px; height: 56px; border-radius: 16px; margin: 0 auto 18px;
-  background: linear-gradient(135deg, rgba(184,150,90,.08), rgba(201,169,110,.05));
+  background: linear-gradient(135deg, rgba(0,212,255,.08), rgba(124,58,237,.06));
   display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-  border: 1px solid rgba(184,150,90,.08);
+  border: 1px solid rgba(0,212,255,.1);
 }
 .feature-card h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 1rem; font-weight: 600; margin-bottom: 8px;
   color: var(--text);
 }
@@ -303,6 +311,7 @@ img { max-width: 100%; height: auto; }
 .footer-divider {
   width: 32px; height: 1px; margin: 0 auto 20px;
   background: var(--gold-gradient);
+  box-shadow: 0 0 8px rgba(0,212,255,.3);
 }
 .footer a { color: var(--text3); transition: color .3s; }
 .footer a:hover { color: var(--primary); }
@@ -331,6 +340,7 @@ img { max-width: 100%; height: auto; }
 
 /* ── Animations ── */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes glow { 0%, 100% { box-shadow: 0 0 8px rgba(0,212,255,.1); } 50% { box-shadow: 0 0 20px rgba(0,212,255,.2); } }
 .animate { animation: fadeUp .5s ease forwards; opacity: 0; }
 `;
 
@@ -596,7 +606,7 @@ function main() {
     console.log(`   商品: ${products.filter(p=>p.active!==0).length} 个`);
     console.log(`   分类: ${activeCats.length} 个`);
     console.log(`   SEO: keywords + description + OG + JSON-LD`);
-    console.log(`   风格: 轻奢`);
+    console.log(`   风格: 科技`);
     console.log(`   链接: 全部指向 ${siteUrl}/product?id=xxx`);
 }
 
